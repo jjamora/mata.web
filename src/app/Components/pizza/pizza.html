@@ -1,0 +1,77 @@
+<div class="container-fluid">
+    <div class="row p-2 bg-info">
+        <div class="col-6">
+            <h3>Pizza List {{pizzaList.length}}</h3>
+        </div>
+        <div class="col-6 text-end">
+            <button class="btn btn-warning" (click)="openModal()"> Add Pizza</button>
+        </div>  
+    </div>
+
+    <table class="table table-bordered table-striped">
+        <thead>
+            <th>Name</th>
+            <th>Type</th>
+            <th>Size</th>
+            <th>Price</th>
+            <th class="text-center">Action</th>
+        </thead>
+        <tbody>
+            @for (item of pizzaList; track $index) {
+                <tr>
+                    <td>{{ item.name }}</td>
+                    <td>{{ item.pizza_type.name }}</td>
+                    <td>{{ item.size }}</td>
+                    <td>{{ item.price }}</td>
+                    <td class="text-center">
+                        <button class="btn btn-warning" (click)="setModalValues(item.id)">Edit</button>
+                    </td>
+                </tr>
+            }
+            
+        </tbody>
+    </table>
+</div>
+
+<!-- The Modal -->
+<div class="modal" id="pizzaModal" #pizzaModal>
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <!-- Modal Header -->
+      <div class="modal-header bg-info">
+        <h4 class="modal-title">Pizza Form</h4>
+        <button type="button" class="btn-close" (click)="closeModal()"></button>
+      </div>
+
+        <!-- Modal body -->
+        <form [formGroup]="pizzaForm" (ngSubmit)="onSubmit()">
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-12">
+                        <input type="text" formControlName="name" name="name" id="name" 
+                            class="form-control" placeholder="Name">
+                    </div>
+                </div>
+                <div class="row mt-3">
+                    <div class="col-6">
+                        <input type="text" formControlName="size" name="size" id="size" 
+                            class="form-control" placeholder="Size">
+                    </div>
+                    <div class="col-6">
+                        <input type="number" formControlName="price" name="price" id="price" 
+                            class="form-control" placeholder="Price">
+                    </div>
+                </div>
+            </div>
+                
+
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button type="submit" [disabled]="this.pizzaForm.invalid" class="btn btn-primary">Save</button>
+                <button type="button" class="btn btn-danger" (click)="closeModal()">Close</button>
+            </div>
+        </form>
+    </div>
+  </div>
+</div>
